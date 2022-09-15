@@ -22,13 +22,19 @@ std::vector<hanoi::Pillar> towers;
 
 
 int main()
-{
-    std::cout << "请输入需要需要移动的盘数: ";
-    std::cin >> SIZE;
+{    
+    do
+    {
+        std::cout << "请输入需要需要移动的盘数(需要大于0): ";
+        std::cin >> SIZE;
+        if (std::cin.fail() || !SIZE)
+        {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+        
+    } while (!SIZE);
 
-    /*hanoi::Pillar pillar1{ "pillar 1", create_data(SIZE)};
-    hanoi::Pillar pillar2{ "pillar 2" };
-    hanoi::Pillar pillar3{ "pillar 3" };*/
 
     towers.emplace_back(hanoi::Pillar{ "pillar 1", create_data(SIZE) });
     towers.emplace_back(hanoi::Pillar{ "pillar 2" });
@@ -38,6 +44,8 @@ int main()
 
     size_t result{ hanoi_solution(SIZE, towers[0],towers[1],towers[2])};
     std::cout << "共需要: " << std::setw(4) << result << " 步来完成" << std::endl;
+
+    system("pause");
 
     return 0;
 }
